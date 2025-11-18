@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Nave</title>
+<style>
+  :root{ --bg:#040417; }
+  html,body{ height:100%; margin:0; background:var(--bg); overflow:hidden; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; color:#fff;}
+  canvas{ display:block; }
+  #retro {
+    position:fixed; inset:0; pointer-events:none;
+    background-image: linear-gradient(transparent 50%, rgba(0,0,0,0.06) 50%);
+    background-size:100% 4px;
+    mix-blend-mode:overlay; opacity:0.7;
+  }
+  #vignette { position:fixed; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%); mix-blend-mode:multiply; opacity:0.9;
+  }
+</style>
+</head>
+<body>
+<div id="retro"></div>
+<div id="vignette"></div>
+
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+
+<script>
+
+/* ========== CONFIGURACIÓN (edita aquí) ========== */
+// Colores del planeta (hex)
+const planetColor1 = '#2ca06c'; // color superior
+const planetColor2 = '#14703f'; // color inferior
+// Intensidad de las nubes (0..0.4)
+const cloudAlpha = 0.08;
+// Velocidad global de la animación (1.0 = normal)
+const speedMultiplier = 1.0;
+// Mostrar overlay retro (scanlines / vignette)
+const enableRetroOverlay = true;
+
+/* ========== FIN CONFIGURACIÓN ========== */
+
+/* ---------- Setup básico ---------- */
+let renderer, scene, camera;
+let width = window.innerWidth, height = window.innerHeight;
+renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(width, height);
+renderer.outputEncoding = THREE.sRGBEncoding;
+document.body.appendChild(renderer.domElement);
+
+scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x02040b, 0.00035);
+
+camera = new THREE.PerspectiveCamera(60, width/height, 0.1, 5000);
+camera.position.set(0, 8, 48);
+
+window.addEventListener('resize', ()=> {
+  width = window.innerWidth; height = window.innerHeight;
+  camera.aspect = width/height; camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+});
+
+/* overlay visibility */
+document.getElementById('retro').style.opacity = enableRetroOverlay ? '0.7' : '0.0';
+document.getElementById('vignette').style.opacity = enableRetroOverlay ? '0.9' : '0.0';
+
+/* ---------- Luces ---------- */
+const hemi = new THREE.HemisphereLight(0xb0d8ff, 0x202030, 0.9);
+scene.add(hemi);
+const dir = new THREE.DirectionalLight(0xffffff, 1.0);
+dir.position.set(10, 20, 10);
+scene.add(dir);
+
+/* ---------- Paleta y util ---------- */
+const PALETTE = { shipBody:0xdfe9f3, shipAccent:0x08324a, nozzle:0xffcc66 };
+
+function lerp(a,b,t){ return a + (b-a) * t; }
+function easeInOutQuad(t){ return t<0.5 ? 2*t*t : -1 + (4-2*t)*t; }
+function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+/* ---------- Starfield ---------- */
+function makeStarfield(count, radius){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    const phi = Math.acos(2*Math.random()-1);
+    const theta = 2*Math.PI*Math.random();
+    const r = radius * (0.25 + Math.random()*0.75);
+    const x = Math.sin(phi) * Math.cos(theta) * r;
+    const y = Math.sin(phi) * Math.sin(theta) * r/1.4;
+    const z = Math.cos(phi) * r;
+    positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+    const c = (Math.random() > 0.98) ? 1.0 : 0.78;
+    colors[i*3]=c; colors[i*3+1]=c; colors[i*3+2]=c;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({ size:1.9, sizeAttenuation:true, vertexColors:true, transparent:true, opacity:0.95, depthWrite:false});
+  const points = new THREE.Points(geo, mat);
+  return points;
+}
+const starfield = makeStarfield(1600, 2400);
+scene.add(starfield);
+
+/* ---------- Planeta (textura generada por canvas) ---------- */
+const planetRadius = 340;
+const planetGeo = new THREE.SphereGeometry(planetRadius, 64, 40);
+
+function makePlanetTextureFromStyle(style, size=2048){
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+
+  // base gradient
+  const g = ctx.createLinearGradient(0,0,size,size);
+  g.addColorStop(0, style.color1);
+  g.addColorStop(1, style.color2);
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,size,size);
+
+  // horizontal retro bands
+  ctx.globalAlpha = 0.14;
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  for(let i=0;i<32;i++){
+    const y = size * (i/32) + Math.sin(i*0.7) * (10 + Math.sin(i)*4);
+    ctx.lineWidth = 8 * (0.6 + Math.random()*0.9);
+    ctx.beginPath();
+    ctx.ellipse(size/2, y, size*0.48, size*0.06 + Math.random()*16, Math.random()*0.4, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // clouds with configurable alpha
+  ctx.globalAlpha = style.cloudAlpha;
+  ctx.fillStyle = '#ffffff';
+  for(let i=0;i<80;i++){
+    const rx = Math.random()*size;
+    const ry = Math.random()*size;
+    const rw = size*0.25*(0.25+Math.random());
+    const rh = size*0.06*(0.5+Math.random());
+    ctx.beginPath();
+    ctx.ellipse(rx, ry, rw, rh, Math.random()*Math.PI, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  return new THREE.CanvasTexture(c);
+}
+
+/* use config values */
+const planetStyle = { color1: planetColor1, color2: planetColor2, cloudAlpha: cloudAlpha };
+
+const planetMat = new THREE.MeshStandardMaterial({
+  map: makePlanetTextureFromStyle(planetStyle, 2048),
+  metalness: 0.02,
+  roughness: 0.86,
+  emissive: 0x001f12,
+  emissiveIntensity: 0.05
+});
+const planet = new THREE.Mesh(planetGeo, planetMat);
+planet.position.set(0, -12, -800);
+scene.add(planet);
+
+/* ---------- Nave poligonal ---------- */
+function makeShipPoligonal(){
+  const g = new THREE.Group();
+
+  const matBody = new THREE.MeshStandardMaterial({ color: 0xdfe9f3, metalness: 0.02, roughness: 0.7, flatShading: true });
+  const matAccent = new THREE.MeshStandardMaterial({ color: 0x08324a, metalness: 0.02, roughness: 0.6, flatShading: true });
+  const matNozzle = new THREE.MeshStandardMaterial({ color: 0xffcc66, metalness: 0.0, roughness: 0.9, flatShading: true });
+  const matWing = new THREE.MeshStandardMaterial({ color: 0xc7d6e5, metalness: 0.02, roughness: 0.7, flatShading: true });
+
+  const fusGeo = new THREE.CylinderGeometry(0.1, 1.8, 10, 3);
+  fusGeo.rotateX(Math.PI/2);
+  const fus = new THREE.Mesh(fusGeo, matBody);
+  fus.position.set(0,0,0);
+  g.add(fus);
+
+  const cockGeo = new THREE.IcosahedronGeometry(1.6, 0);
+  cockGeo.scale(1,0.85,1);
+  const cockpit = new THREE.Mesh(cockGeo, new THREE.MeshStandardMaterial({ color:0x1f6ea6, metalness:0.08, roughness:0.3, flatShading:true }));
+  cockpit.position.set(0, 1.1, 2.0);
+  g.add(cockpit);
+
+  const wingLeft = new THREE.Mesh(new THREE.BoxGeometry(10.6, 0.28, 2.6), matWing);
+  wingLeft.position.set(-2.6, 0, -0.6);
+  wingLeft.rotation.z = 0.06;
+  wingLeft.scale.set(0.9,1,1);
+  const wingRight = wingLeft.clone();
+  wingRight.position.set(2.6,0,-0.6);
+  wingRight.rotation.z = -0.06;
+  g.add(wingLeft, wingRight);
+
+  const tailGeo = new THREE.BoxGeometry(0.4,2.8,4.8);
+  const tailL = new THREE.Mesh(tailGeo, matWing); const tailR = tailL.clone();
+  tailL.position.set(-2.6, 0, -3.2); tailL.rotation.z = 0.22;
+  tailR.position.set(2.6, 0, -3.2); tailR.rotation.z = -0.22;
+  g.add(tailL, tailR);
+
+  const markGeo = new THREE.BoxGeometry(0.5,0.18,1.1);
+  const mark1 = new THREE.Mesh(markGeo, matAccent); mark1.position.set(0,0.6,2.6);
+  const mark2 = mark1.clone(); mark2.position.set(-1.6,0.4,1.8);
+  const mark3 = mark1.clone(); mark3.position.set(1.6,0.4,1.8);
+  g.add(mark1, mark2, mark3);
+
+  const nozzleGeo = new THREE.ConeGeometry(0.9, 1.6, 4);
+  nozzleGeo.rotateX(Math.PI);
+  const nozzle = new THREE.Mesh(nozzleGeo, matNozzle);
+  nozzle.position.set(0, -0.2, -4.6);
+  g.add(nozzle);
+
+  g.scale.set(1.8, 1.8, 1.8);
+  g.rotation.x = -0.03;
+  g.userData.center = new THREE.Vector3(0,0,0);
+  return g;
+}
+const ship = makeShipPoligonal();
+ship.position.set(0, -6, 10);
+scene.add(ship);
+
+/* ---------- Exhaust particles ---------- */
+const exhaustCount = 500;
+const exGeo = new THREE.BufferGeometry();
+const exPos = new Float32Array(exhaustCount*3);
+const exLife = new Float32Array(exhaustCount);
+for(let i=0;i<exhaustCount;i++){ exPos[i*3]=10000; exPos[i*3+1]=10000; exPos[i*3+2]=10000; exLife[i]=0; }
+exGeo.setAttribute('position', new THREE.BufferAttribute(exPos,3));
+exGeo.setAttribute('aLife', new THREE.BufferAttribute(exLife,1));
+const exMat = new THREE.PointsMaterial({ color:PALETTE.nozzle, size:1.9, transparent:true, opacity:0.95, depthWrite:false });
+const exhaust = new THREE.Points(exGeo, exMat);
+scene.add(exhaust);
+const exVel = new Array(exhaustCount).fill(0).map(()=>({x:0,y:0,z:0}));
+const exAge = new Float32Array(exhaustCount);
+function emitExhaust(worldX, worldY, worldZ, power){
+  for(let i=0;i<exhaustCount;i++){
+    if(exLife[i] <= 0){
+      const jitter = 0.7;
+      exPos[i*3] = worldX + (Math.random()-0.5)*jitter;
+      exPos[i*3+1] = worldY + (Math.random()-0.5)*jitter;
+      exPos[i*3+2] = worldZ + (Math.random()-0.5)*jitter;
+      exLife[i] = 0.6 + Math.random()*1.0 * power;
+      break;
+    }
+  }
+}
+
+/* ---------- Timeline y animación ---------- */
+let t = 0;
+let state = 'idle';
+let last = performance.now();
+let animationComplete = false;
+
+const SEQ = { prelaunch:900, ignition:700, liftoff:3000, cruise:7000 };
+
+function animate(now){
+  const rawDt = Math.min(40, now - last); last = now;
+  const dt = rawDt * 0.001 * speedMultiplier;
+  t += dt;
+
+  if(state==='idle' && t > 0.6) { state='prelaunch'; }
+  if(state==='prelaunch' && t > 0.6 + SEQ.prelaunch/1000) { state='ignition'; }
+  if(state==='ignition' && t > 0.6 + (SEQ.prelaunch+SEQ.ignition)/1000) { state='liftoff'; }
+  if(state==='liftoff' && t > 0.6 + (SEQ.prelaunch+SEQ.ignition+SEQ.liftoff)/1000) { state='cruise'; }
+
+  planet.rotation.y += 0.01 * dt * 60;
+
+  let thrust = 0;
+  if(state==='prelaunch') thrust = 0.12 * easeInOutQuad(Math.min(1,(t-0.6)/(SEQ.prelaunch/1000)));
+  else if(state==='ignition') thrust = 0.7 * easeOutCubic(Math.min(1,(t - (0.6 + SEQ.prelaunch/1000))/(SEQ.ignition/1000)));
+  else if(state==='liftoff') thrust = 0.9 + 0.6 * easeOutCubic(Math.min(1,(t - (0.6 + (SEQ.prelaunch+SEQ.ignition)/1000))/(SEQ.liftoff/1000)));
+  else if(state==='cruise') thrust = 0.7 + Math.sin(now/200) * 0.08;
+
+  const startPos = new THREE.Vector3(0, -6, 10);
+  const liftPos  = new THREE.Vector3(-6, 8, -60);
+  const targetPos= new THREE.Vector3(26, 28, -520);
+  let progress = 0;
+  if(state==='liftoff') progress = Math.min(1, (t - (0.6 + (SEQ.prelaunch+SEQ.ignition)/1000)) / (SEQ.liftoff/1000));
+  if(state==='cruise') progress = Math.min(1, (t - (0.6 + (SEQ.prelaunch+SEQ.ignition+SEQ.liftoff)/1000)) / (SEQ.cruise/1000));
+
+  if(state==='idle' || state==='prelaunch' || state==='ignition'){
+    ship.position.lerp(startPos, 0.08);
+    ship.rotation.x = lerp(ship.rotation.x, -0.03 + Math.sin(now/1200)*0.01, 0.08);
+    ship.rotation.y = lerp(ship.rotation.y, Math.sin(now/900)*0.01, 0.08);
+  } else if(state==='liftoff'){
+    const s = easeOutCubic(progress);
+    ship.position.lerpVectors(startPos, liftPos, s);
+    ship.rotation.x = lerp(-0.03, -0.42, s);
+    ship.rotation.y = lerp(0, -0.22, s);
+  } else if(state==='cruise'){
+    const s = easeInOutQuad(progress);
+    ship.position.lerpVectors(liftPos, targetPos, s);
+    ship.rotation.x = lerp(-0.42, -0.16, s);
+    ship.rotation.y = lerp(-0.22, 0.06, s);
+  }
+
+  const camStart = new THREE.Vector3(0,10,56);
+  const camMid   = new THREE.Vector3(0,8,28);
+  const camFar   = new THREE.Vector3(28,24,-240);
+  let camT = 0;
+  if(state==='idle' || state==='prelaunch' || state==='ignition'){ camT = 0; }
+  else if(state==='liftoff'){ camT = easeOutCubic(progress * 0.85); }
+  else if(state==='cruise'){ camT = 0.85 + 0.15 * easeInOutQuad(progress); }
+  let camPos = new THREE.Vector3();
+  if(camT < 0.5) camPos.lerpVectors(camStart, camMid, camT*2);
+  else camPos.lerpVectors(camMid, camFar, (camT-0.5)*2);
+  camera.position.lerp(camPos, 0.12);
+  const lookAt = new THREE.Vector3().copy(ship.position).add(new THREE.Vector3(0,8,-120));
+  camera.lookAt( lookAt );
+
+  const nozzleWorld = new THREE.Vector3(0, -0.4, -3.8);
+  nozzleWorld.applyMatrix4(ship.matrixWorld);
+  const emitRate = 22 * thrust * speedMultiplier;
+  if(Math.random() < emitRate * dt * 4){
+    emitExhaust(nozzleWorld.x, nozzleWorld.y, nozzleWorld.z, thrust);
+  }
+
+  for(let i=0;i<exhaustCount;i++){
+    if(exLife[i] > 0){
+      exAge[i] += dt;
+      if(exVel[i].initialized !== true){
+        exVel[i].x = (Math.random()-0.5) * 1.4;
+        exVel[i].y = -2.0 - Math.random()*1.8;
+        exVel[i].z = Math.random()*2.4;
+        exVel[i].initialized = true;
+      }
+      exPos[i*3] += exVel[i].x * 6 * dt * (0.6 + thrust*1.6);
+      exPos[i*3+1] += exVel[i].y * 6 * dt * (0.6 + thrust*1.4);
+      exPos[i*3+2] += exVel[i].z * 6 * dt * (0.6 + thrust*1.4);
+      exVel[i].x *= (0.994 - dt*0.02);
+      exVel[i].y += 0.9 * dt;
+      exVel[i].z *= (0.994 - dt*0.02);
+      exLife[i] -= dt * (0.9 + Math.random()*0.6);
+      if(exLife[i] <= 0){
+        exPos[i*3]=10000; exPos[i*3+1]=10000; exPos[i*3+2]=10000;
+        exVel[i].initialized = false; exAge[i]=0;
+      }
+    }
+  }
+  exGeo.attributes.position.needsUpdate = true;
+  exGeo.attributes.aLife.needsUpdate = true;
+
+  starfield.rotation.y += 0.015 * dt * 60;
+
+  if(state==='cruise'){
+    planet.position.z = lerp(-800, -680, easeInOutQuad(progress));
+    planet.position.y = lerp(-12, -2, easeInOutQuad(progress));
+  }
+
+  // Verificar si la animación ha terminado
+  if (state === 'cruise' && progress >= 1 && !animationComplete) {
+    animationComplete = true;
+    
+    // Crear efecto de transición antes de redirigir
+    const transitionOverlay = document.createElement('div');
+    transitionOverlay.style.position = 'fixed';
+    transitionOverlay.style.top = '0';
+    transitionOverlay.style.left = '0';
+    transitionOverlay.style.width = '100%';
+    transitionOverlay.style.height = '100%';
+    transitionOverlay.style.backgroundColor = '#000';
+    transitionOverlay.style.opacity = '0';
+    transitionOverlay.style.transition = 'opacity 2s';
+    transitionOverlay.style.zIndex = '10000';
+    document.body.appendChild(transitionOverlay);
+    
+    // Animación de transición
+    setTimeout(() => {
+      transitionOverlay.style.opacity = '1';
+    }, 100);
+    
+    // Redirigir después de la transición
+    setTimeout(() => {
+      window.location.href = 'mundo.html';
+    }, 2500);
+  }
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+/* ---------- Inicialización y ajustes ---------- */
+renderer.toneMappingExposure = 1.0;
+t = 0; last = performance.now();
+</script>
+</body>
+</html>
