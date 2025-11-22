@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regresando al Origen...</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background-color: #000; 
+            font-family: 'VT323', monospace;
+        }
+        
+        /* Overlay Retro */
+        #scanlines {
+            position: fixed; inset: 0; pointer-events: none; z-index: 10;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        /* Texto de Estado */
+        .status-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4fc3f7;
+            font-size: 2em;
+            text-shadow: 0 0 10px #4fc3f7;
+            letter-spacing: 4px;
+            opacity: 0;
+            z-index: 20;
+            animation: fadeInOut 2s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; letter-spacing: 10px; filter: blur(10px); }
+            20% { opacity: 1; letter-spacing: 4px; filter: blur(0); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+        }
+
+        /* Fade blanco final */
+        #flash {
+            position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 100;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="scanlines"></div>
+    <div class="status-text">REESTABLECIENDO ENLACE...</div>
+    <div id="flash"></div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script>
+        // ESCENA
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x000000, 0.02);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        // Empezamos "lejos" y nos acercamos
+        camera.position.z = 50;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // --- CUBO MADRE (Target) ---
+        // Representa el menú principal al que volvemos
+        const geometry = new THREE.BoxGeometry(4, 4, 4);
+        const wireframe = new THREE.WireframeGeometry(geometry);
+        const material = new THREE.LineBasicMaterial({ color: 0x4fc3f7, transparent: true, opacity: 0.8 });
+        const cube = new THREE.LineSegments(wireframe, material);
+        scene.add(cube);
+
+        // --- ESTRELLAS (Efecto tunel reverso) ---
+        const starsGeo = new THREE.BufferGeometry();
+        const starsCount = 2000;
+        const posArray = new Float32Array(starsCount * 3);
+        
+        for(let i = 0; i < starsCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 200; // Esparcidas
+        }
+        
+        starsGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const starsMat = new THREE.PointsMaterial({
+            size: 0.5, color: 0xffffff, transparent: true, opacity: 0.8
+        });
+        const starMesh = new THREE.Points(starsGeo, starsMat);
+        scene.add(starMesh);
+
+        // --- ANIMACIÓN ---
+        let speed = 2.0;
+        let time = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.02;
+
+            // 1. Movimiento del Cubo (Materializándose)
+            cube.rotation.x += 0.02;
+            cube.rotation.y += 0.03;
+            
+            // El cubo empieza pequeño y crece (efecto acercarse)
+            // Pero la cámara es la que se mueve realmente
+            
+            // 2. Movimiento de Cámara (Acercamiento rápido)
+            if (camera.position.z > 8) {
+                // Lerp para suavizar la llegada
+                camera.position.z -= speed; 
+                // Desacelerar al llegar
+                if(camera.position.z < 20) speed *= 0.95;
+            }
+
+            // 3. Efecto Estrellas (Pasan rápido y luego frenan)
+            const positions = starMesh.geometry.attributes.position.array;
+            for(let i = 2; i < starsCount * 3; i += 3) {
+                // Mover estrellas hacia la cámara (Z positivo)
+                positions[i] += speed * 2; 
+                
+                // Si pasan la cámara, reiniciar al fondo
+                if (positions[i] > 50) {
+                    positions[i] = -100;
+                }
+            }
+            starMesh.geometry.attributes.position.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // --- REDIRECCIÓN ---
+        // A los 2.2 segundos, flash blanco y cambio
+        setTimeout(() => {
+            document.getElementById('flash').style.opacity = 1;
+        }, 2000);
+
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2500);
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

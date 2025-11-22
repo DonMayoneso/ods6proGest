@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SYSTEM OVERRIDE - DOOM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- ESTÉTICA RETRO DOS --- */
+        body {
+            background-color: #000;
+            color: #0f0; /* Verde fósforo clásico */
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Efecto CRT Scanline */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Contenedor del Juego */
+        .game-container {
+            position: relative;
+            z-index: 1;
+            border: 2px solid #0f0;
+            box-shadow: 0 0 20px #0f0;
+            background: #000;
+            max-width: 90%;
+            max-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas.emscripten {
+            border: 0 none;
+            background-color: black;
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Status y Logs */
+        .emscripten-status {
+            color: #0f0;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        /* BOTONES (Estilo Unificado) */
+        .sys-btn {
+            position: absolute;
+            top: 20px;
+            font-family: 'Courier New', monospace;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            z-index: 10;
+            transition: all 0.3s;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        /* Botón Salir (Rojo - Derecha) */
+        .exit-btn {
+            right: 20px;
+            background: #220000;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+        }
+        .exit-btn:hover { background: #ff0000; color: #000; box-shadow: 0 0 15px #ff0000; }
+
+        /* Botón Fullscreen (Verde - Izquierda) */
+        .fullscreen-btn {
+            left: 20px;
+            background: #002200;
+            border: 1px solid #0f0;
+            color: #0f0;
+        }
+        .fullscreen-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 15px #0f0; }
+
+        /* Controles */
+        .controls-info {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            width: 80%;
+            line-height: 1.4;
+        }
+        .controls-info span { color: #ccc; }
+
+        /* Ocultar elementos de JS-DOS no deseados */
+        .fullscreen, .emscripten-padding { display: none; }
+    </style>
+    
+    <script src="https://js-dos.com/assets/js/jquery-1.11.2.min.js"></script>
+</head>
+
+<body>
+
+    <button id="btn-fullscreen" class="sys-btn fullscreen-btn">[ PANTALLA COMPLETA ]</button>
+    <a href="index.html" class="sys-btn exit-btn">[ ABORTAR SIMULACIÓN ]</a>
+
+    <div class="emscripten-status">
+        <div id="status">INICIALIZANDO SISTEMA...</div>
+        <div id="progress" hidden>CARGANDO...</div>
+    </div>
+
+    <div class="game-container">
+        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    </div>
+
+    <div class="controls-info">
+        CONTROLES: <span>FLECHAS</span> MOVER | <span>CTRL</span> DISPARAR | <span>ESPACIO</span> USAR | <span>1-7</span> ARMAS
+    </div>
+
+    <script>
+        document.getElementById('btn-fullscreen').addEventListener('click', function() {
+            if (Module.requestFullScreen) {
+                Module.requestFullScreen(false, false);
+            } else {
+                alert("El motor DOS aún no está listo. Espera unos segundos.");
+            }
+        });
+    </script>
+
+    <script type='text/javascript'>
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+
+      var Module = {
+        noImageDecoding: true,
+        preRun: [],
+        postRun: [],
+        print: function(text) { console.log(text); },
+        printErr: function(text) { console.error(text); },
+        canvas: (function() {
+          var canvas = document.getElementById('canvas');
+          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. Reload page.'); e.preventDefault(); }, false);
+          return canvas;
+        })(),
+        setStatus: function(text) {
+          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (text === Module.setStatus.text) return;
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          if (m) {
+            text = m[1];
+            progressElement.innerHTML = "CARGANDO DATOS... " + Math.round(parseInt(m[2]) / parseInt(m[4]) * 100) + "%";
+            progressElement.hidden = false;
+          } else {
+            progressElement.hidden = true;
+          }
+          statusElement.innerHTML = text === "" ? "SISTEMA LISTO" : text.toUpperCase();
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'PREPARANDO... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'TODOS LOS ARCHIVOS CARGADOS.');
+        },
+        SDL_numSimultaneouslyQueuedBuffers: 1
+      };
+
+      Module.setStatus('CONECTANDO...');
+      
+      window.onerror = function(event) {
+        Module.setStatus('ERROR CRÍTICO DEL SISTEMA');
+        Module.setStatus = function(text) {
+          if (text) Module.printErr('[error] ' + text);
+        };
+      };
+
+      // Carga del Script DOSBox
+      setTimeout(function () {
+        $.ajax({
+          url: "https://js-dos.com/dosbox.js",
+          dataType: "script",
+          error: function(jqXHR, textStatus, error) {
+             $('#status').html('ERROR DE CONEXIÓN');
+             console.log(textStatus, error);
+          },
+          xhr: function() {
+            var xhr = $.ajaxSettings.xhr();
+            xhr.addEventListener("progress", function(evt) {
+              if (evt.lengthComputable) {
+                Module.setStatus("DESCARGANDO NÚCLEO... (" + evt.loaded + "/" + evt.total + ")");
+              }
+            });
+            return xhr;
+          }
+        });
+      }, 1000);
+    </script>
+
+    <script type="text/javascript">
+    var Module;
+    if (typeof Module === 'undefined') Module = eval('(function() { try { return Module || {} } catch(e) { return {} } })()');
+    if (!Module.expectedDataFileDownloads) {
+      Module.expectedDataFileDownloads = 0;
+      Module.finishedDataFileDownloads = 0;
+    }
+    Module.expectedDataFileDownloads++;
+    (function() {
+        var PACKAGE_PATH;
+        if (typeof window === 'object') {
+          PACKAGE_PATH = "https://js-dos.com/games/";
+        } else {
+          PACKAGE_PATH = "https://js-dos.com/games/";
+        }
+        var PACKAGE_NAME = '/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data';
+        var REMOTE_PACKAGE_BASE = PACKAGE_PATH+'doom.exe.data';
+        
+        if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
+          Module['locateFile'] = Module['locateFilePackage'];
+        }
+        var REMOTE_PACKAGE_NAME = typeof Module['locateFile'] === 'function' ?
+                                  Module['locateFile'](REMOTE_PACKAGE_BASE) :
+                                  ((Module['filePackagePrefixURL'] || '') + REMOTE_PACKAGE_BASE);
+        var REMOTE_PACKAGE_SIZE = 13731014;
+      
+        function fetchRemotePackage(packageName, packageSize, callback, errback) {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', packageName, true);
+          xhr.responseType = 'arraybuffer';
+          xhr.onprogress = function(event) {
+            var url = packageName;
+            var size = packageSize;
+            if (event.total) size = event.total;
+            if (event.loaded) {
+              if (!xhr.addedTotal) {
+                xhr.addedTotal = true;
+                if (!Module.dataFileDownloads) Module.dataFileDownloads = {};
+                Module.dataFileDownloads[url] = { loaded: event.loaded, total: size };
+              } else {
+                Module.dataFileDownloads[url].loaded = event.loaded;
+              }
+              var total = 0; var loaded = 0; var num = 0;
+              for (var download in Module.dataFileDownloads) {
+                var data = Module.dataFileDownloads[download];
+                total += data.total; loaded += data.loaded; num++;
+              }
+              total = Math.ceil(total * Module.expectedDataFileDownloads/num);
+              if (Module['setStatus']) Module['setStatus']('RECIBIENDO PAYLOAD... (' + loaded + '/' + total + ')');
+            } else if (!Module.dataFileDownloads) {
+              if (Module['setStatus']) Module['setStatus']('RECIBIENDO PAYLOAD...');
+            }
+          };
+          xhr.onload = function(event) {
+            var packageData = xhr.response;
+            callback(packageData);
+          };
+          xhr.send(null);
+        };
+      
+        function handleError(error) { console.error('package error:', error); };
+      
+        var fetched = null, fetchedCallback = null;
+        fetchRemotePackage(REMOTE_PACKAGE_NAME, REMOTE_PACKAGE_SIZE, function(data) {
+          if (fetchedCallback) {
+            fetchedCallback(data);
+            fetchedCallback = null;
+          } else {
+            fetched = data;
+          }
+        }, handleError);
+        
+      function runWithFS() {
+        function assert(check, msg) { if (!check) throw msg + new Error().stack; }
+
+        function DataRequest(start, end, crunched, audio) {
+          this.start = start; this.end = end; this.crunched = crunched; this.audio = audio;
+        }
+        DataRequest.prototype = {
+          requests: {},
+          open: function(mode, name) {
+            this.name = name; this.requests[name] = this;
+            Module['addRunDependency']('fp ' + this.name);
+          },
+          send: function() {},
+          onload: function() {
+            var byteArray = this.byteArray.subarray(this.start, this.end);
+            this.finish(byteArray);
+          },
+          finish: function(byteArray) {
+            var that = this;
+            Module['FS_createPreloadedFile'](this.name, null, byteArray, true, true, function() {
+              Module['removeRunDependency']('fp ' + that.name);
+            }, function() {
+              if (that.audio) { Module['removeRunDependency']('fp ' + that.name); } 
+              else { Module.printErr('Preloading file ' + that.name + ' failed'); }
+            }, false, true);
+            this.requests[this.name] = null;
+          },
+        };
+
+        // Mapeo de archivos del juego
+        new DataRequest(0, 67, 0, 0).open('GET', '/MODEM.NUM');
+        new DataRequest(67, 2603, 0, 0).open('GET', '/DWANGO.STR');
+        new DataRequest(2603, 6008, 0, 0).open('GET', '/MODEM.STR');
+        new DataRequest(6008, 82906, 0, 0).open('GET', '/DMFAQ66C.TXT');
+        new DataRequest(82906, 87595, 0, 0).open('GET', '/HELPME.TXT');
+        new DataRequest(87595, 108532, 0, 0).open('GET', '/DM.EXE');
+        new DataRequest(108532, 12516824, 0, 0).open('GET', '/DOOM.WAD');
+        new DataRequest(12516824, 12551396, 0, 0).open('GET', '/DMFAQ66D.TXT');
+        new DataRequest(12551396, 12556013, 0, 0).open('GET', '/ORDER.FRM');
+        new DataRequest(12556013, 12576270, 0, 0).open('GET', '/SERSETUP.EXE');
+        new DataRequest(12576270, 12577041, 0, 0).open('GET', '/DEFAULT.CFG');
+        new DataRequest(12577041, 12587664, 0, 0).open('GET', '/DWANGO.DOC');
+        new DataRequest(12587664, 12609653, 0, 0).open('GET', '/README.TXT');
+        new DataRequest(12609653, 12729854, 0, 0).open('GET', '/DMFAQ66A.TXT');
+        new DataRequest(12729854, 13445347, 0, 0).open('GET', '/DOOM.EXE');
+        new DataRequest(13445347, 13585941, 0, 0).open('GET', '/DMFAQ66B.TXT');
+        new DataRequest(13585941, 13603992, 0, 0).open('GET', '/IPXSETUP.EXE');
+        new DataRequest(13603992, 13677630, 0, 0).open('GET', '/DWANGO.EXE');
+        new DataRequest(13677630, 13677885, 0, 0).open('GET', '/DWANGO.SRV');
+        new DataRequest(13677885, 13684282, 0, 0).open('GET', '/DM.DOC');
+        new DataRequest(13684282, 13684349, 0, 0).open('GET', '/MODEM.CFG');
+        new DataRequest(13684349, 13731014, 0, 0).open('GET', '/SETUP.EXE');
+
+        function processPackageData(arrayBuffer) {
+          Module.finishedDataFileDownloads++;
+          assert(arrayBuffer, 'Loading data file failed.');
+          var byteArray = new Uint8Array(arrayBuffer);
+          DataRequest.prototype.byteArray = byteArray;
+          var files = ["/MODEM.NUM","/DWANGO.STR","/MODEM.STR","/DMFAQ66C.TXT","/HELPME.TXT","/DM.EXE","/DOOM.WAD","/DMFAQ66D.TXT","/ORDER.FRM","/SERSETUP.EXE","/DEFAULT.CFG","/DWANGO.DOC","/README.TXT","/DMFAQ66A.TXT","/DOOM.EXE","/DMFAQ66B.TXT","/IPXSETUP.EXE","/DWANGO.EXE","/DWANGO.SRV","/DM.DOC","/MODEM.CFG","/SETUP.EXE"];
+          files.forEach(function(file){ DataRequest.prototype.requests[file].onload(); });
+          Module['removeRunDependency']('datafile_/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data');
+        };
+        
+        Module['addRunDependency']('datafile_/home/caiiiycuk/js/js-dos.com/build/games/doom.exe.data');
+      
+        if (!Module.preloadResults) Module.preloadResults = {};
+        Module.preloadResults[PACKAGE_NAME] = {fromCache: false};
+        if (fetched) { processPackageData(fetched); fetched = null; } 
+        else { fetchedCallback = processPackageData; }
+      }
+      
+      if (Module['calledRun']) { runWithFS(); } 
+      else {
+        if (!Module['preRun']) Module['preRun'] = [];
+        Module["preRun"].push(runWithFS);
+      }
+    })();
+
+    Module['arguments'] = [ '-conf', './dosbox.conf', './DOOM.EXE' ];
+    </script>
+</body>
+</html>

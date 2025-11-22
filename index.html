@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistema de Monitoreo Global - ODS6</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="cube.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logoweb.png" alt="Logo Web" class="project-logo" onerror="this.style.display='none';">
+            </a>
+        </div>
+        <div class="header-right">
+            <a href="acerca.html" class="nav-link">Acerca de</a>
+            <a href="https://www.un.org/sustainabledevelopment/es/water-and-sanitation/" target="_blank" class="ods-btn">
+                <i class="fas fa-globe-americas"></i> ODS6
+            </a>
+        </div>
+    </header>
+
+    <div class="ui-controls-center">
+        <div class="cube-instructions">
+            <i class="fas fa-mouse-pointer"></i> arrastra afuera para rotar click a una cara para viajar
+        </div>
+        <button id="toggle-rotation" class="control-btn">
+            <i class="fas fa-pause"></i> <span>PAUSAR ORBITA</span>
+        </button>
+    </div>
+
+    <div class="main-container" id="orbit-controls">
+        <div class="scene">
+            <div class="cube">
+                <div class="face front" data-index="0"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                <div class="face back" data-index="1"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                <div class="face right" data-index="2"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                <div class="face left" data-index="3"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                <div class="face top" data-index="4"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                <div class="face bottom" data-index="5"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="side-panel water-panel" id="water-panel">
+        <div class="panel-header-row">
+            <a href="https://www.worldometers.info/water/" target="_blank" class="source-link">
+                <div class="water-header">WORLDOMETER <i class="fas fa-external-link-alt"></i></div>
+            </a>
+            <button class="minimize-btn" id="min-water"><i class="fas fa-minus"></i></button>
+        </div>
+        <div class="panel-content">
+            <div class="water-drop-container">
+                <svg class="water-drop-svg" viewBox="0 0 2200 2200" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.9" />
+                            <stop offset="70%" stop-color="#009ee2" stop-opacity="1" />
+                            <stop offset="100%" stop-color="#0277bd" stop-opacity="1" />
+                        </linearGradient>
+                        <clipPath id="fillClip"><path d="M1707.22,1290.05c-22.57-97.89-63-197.61-120.18-296.37-40.38-69.74-98.5-153.89-165.8-251.32-90.29-130.71-200.44-290.18-321.23-490.59-120.79,200.39-230.94,359.84-321.22,490.54-67.32,97.45-125.45,181.62-165.84,251.37-57.18,98.76-97.61,198.47-120.17,296.37-25.27,109.62-26.96,213.41-5.03,308.5,33.83,146.68,128.05,276.42,252.05,347.08,101.95,58.1,197.76,94.12,360.21,94.12,133.06,0,247.51-29.91,360.19-94.12,124-70.66,218.23-200.41,252.05-347.08,21.93-95.08,20.24-198.88-5.03-308.5ZM971.75,1916.3c-132.41-12.99-257.5-82.44-321.63-203.04-106.67-199.01-65.06-470.06,68.47-645.81-58.03,186.78-79.4,421.36,17.89,597.09,54.53,95.55,133.07,178.53,383.58,248.49-49.16,7.7-98.89,8.44-148.31,3.27Z"/></clipPath>
+                    </defs>
+                    <path class="drop-outline" d="M1799.54,1268.77c-24.69-107.1-68.6-215.63-130.51-322.56-42.27-73.01-101.39-158.59-169.84-257.69-99.49-144.03-223.3-323.28-358.32-553.39l-40.86-69.62-40.86,69.62c-135.02,230.08-258.83,409.31-358.31,553.33-68.47,99.12-127.6,184.73-169.88,257.75-61.91,106.93-105.82,215.46-130.5,322.56-28.52,123.74-30.21,241.86-5.03,351.08,39.68,172.01,150.88,324.57,297.46,408.09,112.2,63.96,224.38,106.55,407.12,106.55,150.19,0,279.55-33.86,407.1-106.55,146.59-83.53,257.79-236.09,297.46-408.09,25.19-109.22,23.49-227.34-5.03-351.08ZM1712.25,1598.55c-33.82,146.67-128.05,276.42-252.05,347.08-112.68,64.21-227.13,94.12-360.19,94.12-162.45,0-258.26-36.02-360.21-94.12-124-70.66-218.22-200.4-252.05-347.08-21.93-95.09-20.24-198.88,5.03-308.5,22.56-97.9,62.99-197.61,120.17-296.37,40.39-69.75,98.52-153.92,165.84-251.37,90.28-130.7,200.43-290.15,321.22-490.54,120.79,200.41,230.94,359.88,321.23,490.59,67.3,97.43,125.42,181.58,165.8,251.32,57.18,98.76,97.61,198.48,120.18,296.37,25.27,109.62,26.96,213.42,5.03,308.5Z"/>
+                    <rect id="waterFill" class="water-fill" x="0" y="2200" width="2200" height="2200" fill="url(#waterGradient)" clip-path="url(#fillClip)" />
+                    <rect id="alarmLayer" class="alarm-layer" x="0" y="2200" width="2200" height="2200" clip-path="url(#fillClip)" />
+                    <path class="water-interior" fill="#1a0000" fill-opacity="0.8" d="M1707.22,1290.05c-22.57-97.89-63-197.61-120.18-296.37-40.38-69.74-98.5-153.89-165.8-251.32-90.29-130.71-200.44-290.18-321.23-490.59-120.79,200.39-230.94,359.84-321.22,490.54-67.32,97.45-125.45,181.62-165.84,251.37-57.18,98.76-97.61,198.47-120.17,296.37-25.27,109.62-26.96,213.41-5.03,308.5,33.83,146.68,128.05,276.42,252.05,347.08,101.95,58.1,197.76,94.12,360.21,94.12,133.06,0,247.51-29.91,360.19-94.12,124-70.66,218.23-200.41,252.05-347.08,21.93-95.08,20.24-198.88-5.03-308.5ZM971.75,1916.3c-132.41-12.99-257.5-82.44-321.63-203.04-106.67-199.01-65.06-470.06,68.47-645.81-58.03,186.78-79.4,421.36,17.89,597.09,54.53,95.55,133.07,178.53,383.58,248.49-49.16,7.7-98.89,8.44-148.31,3.27Z"/>
+                </svg>
+            </div>
+            <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
+            <div class="water-percentage"><span id="fresh-water-percent">2.5</span>% AGUA DULCE</div>
+            <div class="water-info-block">
+                <div class="info-label">CONSUMO ESTE AÑO</div>
+                <div id="live-consumption" class="live-counter">0</div>
+                <div class="unit">MILLONES DE LITROS</div>
+            </div>
+            <div class="water-context">El 97.5% es salada. Estamos agotando nuestras reservas vitales.</div>
+        </div>
+    </div>
+
+    <div class="side-panel mascot-panel" id="mascot-panel">
+        <div class="panel-header-row">
+            <div class="mascot-header"><i class="fas fa-rocket"></i> NUESTRO VIAJERO</div>
+            <button class="minimize-btn" id="min-mascot"><i class="fas fa-minus"></i></button>
+        </div>
+        <div class="panel-content">
+            <div class="mascot-display">
+                <div id="speech-bubble" class="speech-bubble">Hola, soy Gota.</div>
+                <div class="mascot-img-container">
+                    <img src="assets/gota.jpg" alt="Mascota" class="mascot-img" onerror="this.src='https://via.placeholder.com/120x120?text=VIAJERO'">
+                </div>
+            </div>
+            <div class="water-context" style="margin-top:20px;">
+                "Cada gota cuenta en la historia de nuestro planeta."
+            </div>
+        </div>
+    </div>
+
+    <button id="footer-toggle" class="footer-toggle-btn"><i class="fas fa-chevron-up"></i> INFO</button>
+
+    <footer class="main-footer" id="main-footer">
+        <div class="footer-logos">
+            <a href="https://www.ups.edu.ec" target="_blank" class="footer-logo-link">
+                <img src="assets/logoups.png" alt="Logo UPS" class="footer-logo-img" onerror="this.src='https://via.placeholder.com/100x40?text=UPS'">
+            </a>
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/logoweb.png" alt="Logo Web" class="footer-logo-img" onerror="this.src='https://via.placeholder.com/100x40?text=WEB'">
+            </a>
+            <a href="https://cdm.ups.edu.ec" target="_blank" class="footer-logo-link">
+                <img src="assets/logomulti.png" alt="Logo Carrera" class="footer-logo-img" onerror="this.src='https://via.placeholder.com/100x40?text=MULTI'">
+            </a>
+        </div>
+        <div class="copyright">&copy; 2025 SISTEMA DE MONITOREO GLOBAL</div>
+    </footer>
+
+    <div id="spaceTravel"><div class="travel-text">Viajando...</div></div>
+
+    <script src="cube.js"></script>
+</body>
+</html>
