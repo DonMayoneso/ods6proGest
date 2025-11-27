@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Terminal de Datos</title>
+    <title>H₂Q - Mundos</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="mundo.css">
@@ -15,10 +15,21 @@
                 <div class="modal-title">DOC_CLASIF: THEME_ARTBOOK</div>
                 <span class="close-modal" data-target="pdfModal">&times;</span>
             </div>
-            <embed id="pdfEmbed" src="" type="application/pdf" class="pdf-viewer">
+            
+            <iframe id="pdfEmbed" src="" class="pdf-viewer desktop-only"></iframe>
+
+            <div class="mobile-pdf-fallback mobile-only">
+                <div class="fallback-icon"><i class="fas fa-file-pdf"></i></div>
+                <h3>VISUALIZACIÓN EXTERNA REQUERIDA</h3>
+                <p>El protocolo móvil impide la desencriptación en pantalla.</p>
+                <a id="mobileOpenLink" href="" target="_blank" class="btn-mobile-open">
+                    <i class="fas fa-external-link-alt"></i> ABRIR DOCUMENTO
+                </a>
+            </div>
+
             <div class="modal-footer">
                 <a id="downloadLink" href="" download class="download-btn">
-                    <i class="fas fa-download"></i> DESCARGAR
+                    <i class="fas fa-download"></i> DESCARGAR ARCHIVO
                 </a>
             </div>
         </div>
@@ -72,7 +83,6 @@
                 <div class="cyber-player">
                     <button id="cyber-play" class="cyber-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
                     <button id="cyber-reset" class="cyber-btn" title="Reiniciar"><i class="fas fa-redo"></i></button>
-                    
                     <div class="cyber-info">
                         <span class="cyber-label">AUDIO LOG</span>
                         <span class="cyber-status">ESCUCHA SOBRE ESTE MUNDO</span>
