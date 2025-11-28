@@ -12,7 +12,7 @@
       "galDirection": "normal",
       "color1": "#2ca06c",
       "color2": "#80FF00",
-      "themeColor": "#960018",
+      "themeColor": "#98FF98",
       "accentColor": "#98FF98",
       "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO. El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
       "galeria": [
@@ -26,10 +26,7 @@
         { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
         { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
         { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Sofía L.", "rol": "Investigación ODS6", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Jorge B.", "rol": "Edición de Video", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Lucía P.", "rol": "Documentación", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
+        { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
       ]
     },
     {
@@ -191,4 +188,5 @@
     }
   ]
 }
+
 
