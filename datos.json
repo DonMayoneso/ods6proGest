@@ -13,7 +13,7 @@
       "color1": "#2ca06c",
       "color2": "#80FF00",
       "themeColor": "#960018",
-      "accentColor": "#64ffda",
+      "accentColor": "#98FF98",
       "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl El mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO. El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
       "galeria": [
         { "src": "assets/imgtest.jpg", "titulo": "ESTRUCTURA ALPHA", "desc": "Vista aérea de los servidores sumergidos." },
@@ -189,3 +189,4 @@
   ]
 
 }
+
