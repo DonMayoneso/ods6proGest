@@ -22,7 +22,7 @@
         { "src": "assets/imgtest.jpg", "titulo": "RED DE DATOS", "desc": "Flujo de información hídrica en tiempo real." },
         { "src": "assets/imgtest2.jpg", "titulo": "COLONIA", "desc": "Asentamiento humano en simbiosis con el mar." }
       ],
-      "creditos": [
+"creditos": [
         { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
         { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
         { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
@@ -189,5 +189,6 @@
   ]
 
 }
+
 
 
