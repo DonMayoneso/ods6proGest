@@ -2,7 +2,7 @@
   "mundos": [
     {
       "id": "Mundo A",
-      "titulo": "MUNDO A: UTOPIA",
+      "titulo": "SECTOR 094846 – ASERVA",
       "videoPath": "assets/machape.mp4", 
       "imagenUrl": "assets/imgtest.jpg",
       "pdfPath": "assets/smiling.pdf",
@@ -11,10 +11,10 @@
       "ubtitle": "right",
       "galDirection": "normal",
       "color1": "#2ca06c",
-      "color2": "#14703f",
-      "themeColor": "#e0f2f1",
+      "color2": "#80FF00",
+      "themeColor": "#960018",
       "accentColor": "#64ffda",
-      "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl Mundo A representa el equilibrio ideal. Sus vastos océanos digitales y estructuras de datos fluidas conforman el 80% de su superficie.\n\nEstado actual: ESTABLE. Los recursos hídricos se gestionan mediante inteligencia artificial descentralizada, garantizando acceso universal.",
+      "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl El mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO. El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
       "galeria": [
         { "src": "assets/imgtest.jpg", "titulo": "ESTRUCTURA ALPHA", "desc": "Vista aérea de los servidores sumergidos." },
         { "src": "assets/imgtest2.jpg", "titulo": "FAUNA LOCAL", "desc": "Especimen bio-digital purificador de agua." },
@@ -23,13 +23,10 @@
         { "src": "assets/imgtest2.jpg", "titulo": "COLONIA", "desc": "Asentamiento humano en simbiosis con el mar." }
       ],
       "creditos": [
-        { "nombre": "Ana García", "rol": "Líder de Proyecto", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Carlos Ruiz", "rol": "Desarrollador Frontend", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Elena M.", "rol": "Diseño UX/UI", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "David T.", "rol": "Modelado 3D", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Sofía L.", "rol": "Investigación ODS6", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Jorge B.", "rol": "Edición de Video", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Lucía P.", "rol": "Documentación", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
+        { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
+        { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
+        { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
+        { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
       ]
     },
     {
@@ -190,4 +187,5 @@
       ]
     }
   ]
+
 }
