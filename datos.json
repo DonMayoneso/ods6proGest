@@ -10,7 +10,7 @@
       "ubimg": "left",
       "ubtitle": "right",
       "galDirection": "normal",
-      "color1": "#98FF98",
+      "color1": "#960018",
       "color2": "#960018",
       "themeColor": "#960018",
       "accentColor": "#98FF98",
@@ -188,6 +188,7 @@
     }
   ]
 }
+
 
 
 
