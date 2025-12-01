@@ -1,7 +1,7 @@
 {
   "mundos": [
     {
-      "id": "Mundo A",
+      "id": "SECTOR 094846 – ASERVA",
       "titulo": "SECTOR 094846 – ASERVA",
       "videoPath": "assets/machape.mp4", 
       "imagenUrl": "assets/imgtest.jpg",
@@ -14,7 +14,7 @@
       "color2": "#960018",
       "themeColor": "#960018",
       "accentColor": "#960018",
-      "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO. El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
+      "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO.\n\n El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
       "galeria": [
         { "src": "assets/imgtest.jpg", "titulo": "ESTRUCTURA ALPHA", "desc": "Vista aérea de los servidores sumergidos." },
         { "src": "assets/imgtest2.jpg", "titulo": "FAUNA LOCAL", "desc": "Especimen bio-digital purificador de agua." },
@@ -23,177 +23,43 @@
         { "src": "assets/imgtest2.jpg", "titulo": "COLONIA", "desc": "Asentamiento humano en simbiosis con el mar." }
       ],
 "creditos": [
-        { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
+        { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://donmayoneso.github.io/portafolio_cv/" },
         { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
         { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
         { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
       ]
     },
     {
-      "id": "Mundo B",
-      "titulo": "MUNDO B: ARIDIA",
-      "videoPath": "assets/machape.mp4", 
-      "imagenUrl": "assets/imgtest2.jpg",
-      "pdfPath": "assets/smiling.pdf",
-      "audioPath": "assets/mii.mp3",
-      "ubimg": "right",
-      "ubtitle": "left",
-      "galDirection": "reverse",
-      "color1": "#ff6b6b",
-      "color2": "#8e1e1e",
-      "themeColor": "#ffccbc",
-      "accentColor": "#ff5722",
-      "historia": "CONEXIÓN ESTABLECIDA.\n\nEste es un terreno árido y rojizo. La optimización de recursos es la prioridad máxima debido a la escasez crítica de precipitaciones.\n\nAdvertencia: RESERVAS AL 15%. Se han implementado sistemas de recolección de humedad atmosférica de emergencia.",
-      "galeria": [
-        { "src": "assets/imgtest2.jpg", "titulo": "DESIERTO ROJO", "desc": "Dunas de datos corruptos por la sequía." },
-        { "src": "assets/imgtest3.jpg", "titulo": "REFUGIO", "desc": "Búnker subterráneo de condensación." },
-        { "src": "assets/imgtest.jpg", "titulo": "EXTRACTOR", "desc": "Maquinaria antigua para la obtención de agua." },
-        { "src": "assets/imgtest2.jpg", "titulo": "TORMENTA DE ARENA", "desc": "Fenómeno climático que erosiona los servidores." },
-        { "src": "assets/imgtest3.jpg", "titulo": "OASIS SINTÉTICO", "desc": "Único punto de agua potable en 500km." }
-      ],
-      "creditos": [
-        { "nombre": "Marcos L.", "rol": "Programación Web", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Julia R.", "rol": "Diseño de Personajes", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Esteban Q.", "rol": "Animación 3D", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Carla V.", "rol": "Guion Interactivo", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Roberto S.", "rol": "Backend", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Mónica D.", "rol": "Ilustración", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
-      ]
-    },
-    {
-      "id": "Mundo C",
-      "titulo": "MUNDO C: ZERO",
-      "videoPath": "",
-      "imagenUrl": "assets/imgtest3.jpg",
-      "pdfPath": "",
-      "audioPath": "assets/mii.mp3",
-      "ubimg": "left",
-      "ubtitle": "left",
-      "galDirection": "normal",
-      "color1": "#e1f5fe",
-      "color2": "#81d4fa",
-      "themeColor": "#e0f7fa",
-      "accentColor": "#00bcd4",
-      "historia": "CARGANDO SISTEMAS CRIOGÉNICOS...\n\nEl 90% del agua de este mundo está atrapada en glaciares de datos sólidos. El calentamiento del servidor amenaza con inundar los sectores bajos.\n\nMisión: Preservar el permafrost digital.",
-      "galeria": [
-        { "src": "assets/imgtest3.jpg", "titulo": "GLACIAR CENTRAL", "desc": "La mayor reserva de agua dulce." },
-        { "src": "assets/imgtest.jpg", "titulo": "GRIETA", "desc": "Evidencia de deshielo acelerado." },
-        { "src": "assets/imgtest2.jpg", "titulo": "BASE POLAR", "desc": "Centro de investigación climática." },
-        { "src": "assets/imgtest3.jpg", "titulo": "CRISTALES", "desc": "Formaciones de hielo puro." },
-        { "src": "assets/imgtest.jpg", "titulo": "AURORA", "desc": "Visualización magnética de la atmósfera." }
-      ],
-      "creditos": [
-        { "nombre": "Diana P.", "rol": "Líder Técnico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Luis G.", "rol": "Sonido y FX", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Andrea M.", "rol": "Diseño Gráfico", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Felipe R.", "rol": "Programación", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Teresa B.", "rol": "Investigación", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Kevin J.", "rol": "Tester", "foto": "assets/imgtest2.jpg", "link": "https://github.com" }
-      ]
-    },
-    {
-      "id": "Mundo D",
-      "titulo": "MUNDO D: TOXIC",
-      "videoPath": "",
-      "imagenUrl": "assets/imgtest.jpg",
-      "pdfPath": "",
-      "audioPath": "assets/mii.mp3",
-      "ubimg": "right",
-      "ubtitle": "right",
-      "galDirection": "reverse",
-      "color1": "#7b1fa2",
-      "color2": "#4a148c",
-      "themeColor": "#f3e5f5",
-      "accentColor": "#e040fb",
-      "historia": "ACCEDIENDO A ZONA DE CUARENTENA...\n\nEste sector sufre de alta contaminación por residuos industriales no procesados. El agua es violeta y altamente corrosiva.\n\nAlerta: Se requieren filtros de nanotecnología para el consumo humano.",
-      "galeria": [
-        { "src": "assets/imgtest.jpg", "titulo": "RÍO ÁCIDO", "desc": "Corrientes de ph extremadamente bajo." },
-        { "src": "assets/imgtest2.jpg", "titulo": "PLANTA DE FILTRADO", "desc": "Intento fallido de purificación." },
-        { "src": "assets/imgtest3.jpg", "titulo": "MUTACIÓN", "desc": "Flora adaptada a la toxicidad." },
-        { "src": "assets/imgtest.jpg", "titulo": "NIEBLA", "desc": "Vapores nocivos en la superficie." },
-        { "src": "assets/imgtest2.jpg", "titulo": "RESIDUOS", "desc": "Acumulación de basura digital." }
-      ],
-      "creditos": [
-        { "nombre": "Victor H.", "rol": "Arte Conceptual", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Sara T.", "rol": "Desarrollo Web", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Pablo N.", "rol": "Modelado 3D", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Clara F.", "rol": "Animación", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Raúl C.", "rol": "Edición", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Inés D.", "rol": "Documentación", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Mario P.", "rol": "Soporte", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
-      ]
-    },
-    {
-      "id": "Mundo E",
-      "titulo": "MUNDO E: CITY",
-      "videoPath": "",
-      "imagenUrl": "assets/imgtest2.jpg",
-      "pdfPath": "",
-      "audioPath": "assets/mii.mp3",
+      "id": "NIXFA - LA SOCIEDAD DEL AGUA",
+      "titulo": "NIXFA: LA SOCIEDAD DEL AGUA",
+      "videoPath": "assets/NIXFA/Video Agua.mp4", 
+      "imagenUrl": "assets/NIXFA/Mira lab.gif",
+      "pdfPath": "assets/NIXFA/Artbook.pdf",
+      "audioPath": "assets/NIXFA/SOCIEDAD DEL AGUA.mp3",
       "ubimg": "left",
       "ubtitle": "right",
-      "galDirection": "reverse",
-      "color1": "#ffca28",
-      "color2": "#ff6f00",
-      "themeColor": "#fff8e1",
-      "accentColor": "#ffab00",
-      "historia": "SINCRONIZANDO NÚCLEO URBANO...\n\nUna megalópolis dorada que ha resuelto el saneamiento mediante redes inteligentes. Sin embargo, el consumo energético es insostenible.\n\nDesafío: Equilibrar el progreso tecnológico con el ciclo natural del agua.",
-      "galeria": [
-        { "src": "assets/imgtest2.jpg", "titulo": "RASCACIELOS", "desc": "Torres de condensación de agua." },
-        { "src": "assets/imgtest3.jpg", "titulo": "TUBERÍAS DE LUZ", "desc": "Sistema de transporte hídrico fotónico." },
-        { "src": "assets/imgtest.jpg", "titulo": "TRÁFICO", "desc": "Movilidad sostenible en la ciudad." },
-        { "src": "assets/imgtest2.jpg", "titulo": "PARQUE SOLAR", "desc": "Fuente de energía para las bombas." },
-        { "src": "assets/imgtest3.jpg", "titulo": "SUBTERRÁNEO", "desc": "Red de alcantarillado automatizado." }
-      ],
-      "creditos": [
-        { "nombre": "Alex W.", "rol": "Full Stack Dev", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Nora K.", "rol": "Diseño de Interfaz", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Hugo S.", "rol": "Producción", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Lia V.", "rol": "Investigación", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Oscar M.", "rol": "Audio", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Patricia L.", "rol": "QA Testing", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
-      ]
-    },
-    {
-      "id": "Mundo F",
-      "titulo": "MUNDO F: ABYSS",
-      "videoPath": "",
-      "imagenUrl": "assets/imgtest3.jpg",
-      "pdfPath": "",
-      "audioPath": "assets/mii.mp3",
-      "ubimg": "right",
-      "ubtitle": "left",
       "galDirection": "normal",
-      "color1": "#37474f",
-      "color2": "#263238",
-      "themeColor": "#eceff1",
-      "accentColor": "#90a4ae",
-      "historia": "DETECTANDO SEÑALES DE VIDA...\n\nUn mundo de océanos tormentosos y cielos grises. La fuerza de las mareas se utiliza para generar energía limpia, pero las condiciones son hostiles.\n\nProceda con precaución: Olas de datos de magnitud 9 detectadas.",
+      "color1": "#121E32",
+      "color2": "#084D6E",
+      "themeColor": "#CC7722",
+      "accentColor": "#B7410E",
+      "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEn un Quito futurista controlado por el Consejo Soberano, el agua limpia es un privilegio monopolizado. La Sociedad del Agua lucha en secreto para recuperarla.\n\nMira, una joven científica, descubre una quebrada subterránea bajo el Centro Histórico y, junto a Aya, se adentra en túneles vigilados para alcanzarla.\n\nTras una persecución intensa, logran encontrar un hilo de agua pura, pero Aya se sacrifica para que Mira pueda obtener una muestra.Con su prototipo, ella purifica el agua y lleva la prueba al Panecillo, encendiendo la esperanza de la Sociedad. Ese acto desencadena el inicio de una revolución para devolver el agua a toda la ciudad.",
       "galeria": [
-        { "src": "assets/imgtest3.jpg", "titulo": "MAREA ALTA", "desc": "Olas gigantes golpeando la costa." },
-        { "src": "assets/imgtest.jpg", "titulo": "FARO", "desc": "Guía para los navegantes de la red." },
-        { "src": "assets/imgtest2.jpg", "titulo": "PLATAFORMA", "desc": "Estación de extracción de energía mareomotriz." },
-        { "src": "assets/imgtest3.jpg", "titulo": "TORMENTA", "desc": "Rayos impactando en el mar digital." },
-        { "src": "assets/imgtest.jpg", "titulo": "PROFUNDIDAD", "desc": "Misterios ocultos bajo la superficie." }
+        { "src": "assets/NIXFA/Quito.png", "titulo": "QUITO", "desc": "La antigua Quito es ahora una metrópolis marchita bajo un cielo gris permanente." },
+        { "src": "assets/NIXFA/Catacumbas.png", "titulo": "TUNELES DE QUITO", "desc": "Las catacumbas bajo San Roque y barrios cercanos son un laberinto oscuro donde el aire se vuelve denso y metálico" },
+        { "src": "assets/NIXFA/Quebrada Centro Historico.png", "titulo": "QUEBRADAS", "desc": "La quebrada está oculta tras capas de túneles olvidados, muros agrietados y raíces que intentan aferrarse a lo poco que queda de humedad." },
+        { "src": "assets/NIXFA/Laboratorio.png", "titulo": "LABORATORIO DE MIRA", "desc": "El laboratorio de la Sociedad del Agua está escondido en las profundidades de un edificio derrumbado, lejos del alcance de los drones del Consejo Soberano. " },
+        { "src": "assets/NIXFA/Panecillo.png", "titulo": "PANECILLO", "desc": "La estatua de la Virgen, antes símbolo de protección, se ve erosionada y cercada por estructuras del Consejo Soberano que vigilan Quito desde las alturas." },
+        { "src": "assets/NIXFA/Mira vertical.png", "titulo": "MIRA", "desc": "Mira es una científica experta en biofiltración que abandonó al Consejo Soberano al descubrir sus abusos. Ahora dedica su talento a devolver el agua a las comunidades y defender la justicia hídrica." },
+        { "src": "assets/NIXFA/Aya.png", "titulo": "AYA", "desc": "Aya es un guía subterráneo que sobrevivió a la represión del Consejo y ahora usa su habilidad en los túneles para llevar mensajes y recursos de forma segura entre comunidades." },
+        { "src": "assets/NIXFA/Miembro del consejo soberano.png", "titulo": "CONSEJO SOBERANO", "desc": "Los miembros del Consejo Soberano fueron formados para creer que el agua es un recurso demasiado peligroso para quedar en manos de la gente." }
       ],
       "creditos": [
-        { "nombre": "Gabriel Z.", "rol": "Project Manager", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Daniela F.", "rol": "Desarrollador", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Samuel D.", "rol": "Artista 3D", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Irene P.", "rol": "Diseñadora", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Tomás G.", "rol": "Investigador", "foto": "assets/imgtest.jpg", "link": "https://github.com" },
-        { "nombre": "Berta N.", "rol": "Editora", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Ivan R.", "rol": "Soporte", "foto": "assets/imgtest3.jpg", "link": "https://github.com" }
+        { "nombre": "Diddier Lozada", "rol": "Diseño Grafico", "foto": "assets/NIXFA/Diddier.jpeg", "link": "https://github.com" },
+        { "nombre": "Steven Pila", "rol": "Animación 2D", "foto": "assets/NIXFA/Steven.jpg", "link": "https://github.com" },
+        { "nombre": "Juan Rivera", "rol": "Readacción", "foto": "assets/NIXFA/Juan.jpg", "link": "https://github.com" },
+        { "nombre": "Erika Quijije", "rol": "Programación Web", "foto": "assets/NIXFA/Erika.jpg", "link": "https://github.com" }
       ]
     }
   ]
 }
-
-
-
-
-
-
-
-
-

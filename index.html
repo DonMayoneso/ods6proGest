@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>H₂Q - 601 UPSQ</title>
+    <title>H₂Q - UPSQ</title>
+    <link rel="icon" href="assets/logoweb.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="cube.css">
@@ -32,12 +33,37 @@
     <div class="main-container" id="orbit-controls">
         <div class="scene">
             <div class="cube">
-                <div class="face front" data-index="0"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
-                <div class="face back" data-index="1"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
-                <div class="face right" data-index="2"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
-                <div class="face left" data-index="3"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
-                <div class="face top" data-index="4"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
-                <div class="face bottom" data-index="5"><img src="" class="world-bg"><div class="world-title">Cargando...</div></div>
+                
+                <div class="face front" data-index="0">
+                    <img src="" class="world-bg">
+                    <div class="world-title">Cargando...</div>
+                </div>
+
+                <div class="face back" data-index="1">
+                    <img src="" class="world-bg">
+                    <div class="world-title">Cargando...</div>
+                </div>
+
+                <div class="face right" data-link="https://jordanpilliza510-dev.github.io/MetricaM/">
+                    <img src="assets/Biblioteca cuadrado.png" class="world-bg" alt="Externo 1">
+                    <div class="world-title">Mundo 220393 - Métrica</div>
+                </div>
+
+                <div class="face left" data-link="https://notbry20.github.io/MundoAquaCorporation/">
+                    <img src="assets/AquaCorporationcubo.png" class="world-bg" alt="Externo 2">
+                    <div class="world-title">AquaCorporation</div>
+                </div>
+
+                <div class="face top" data-link="https://www.wikipedia.org">
+                    <img src="assets/imgtest2.jpg" class="world-bg" alt="Externo 3">
+                    <div class="world-title">GRUPO EXTERNO 3</div>
+                </div>
+
+                <div class="face bottom" data-link="https://www.github.com">
+                    <img src="assets/imgtest3.jpg" class="world-bg" alt="Externo 4">
+                    <div class="world-title">GRUPO EXTERNO 4</div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -86,7 +112,7 @@
             <div class="mascot-display">
                 <div id="speech-bubble" class="speech-bubble">Hola, soy Gota.</div>
                 <div class="mascot-img-container">
-                    <img src="assets/gota.jpg" alt="Mascota" class="mascot-img" onerror="this.src='https://via.placeholder.com/120x120?text=VIAJERO'">
+                    <img src="assets/gotasal.gif" alt="Mascota" class="mascot-img" onerror="this.src='https://via.placeholder.com/120x120?text=VIAJERO'">
                 </div>
             </div>
             <div class="water-context" style="margin-top:20px;">
@@ -113,6 +139,13 @@
     </footer>
 
     <div id="spaceTravel"><div class="travel-text">Viajando...</div></div>
+    
+    <div id="intro-overlay" class="intro-overlay">
+        <video id="intro-video" playsinline>
+            <source src="assets/intro.mp4" type="video/mp4">
+        </video>
+        <button id="boot-btn" class="boot-btn" style="display:none;">[ INICIAR SISTEMA ]</button>
+    </div>
 
     <script src="cube.js"></script>
 </body>

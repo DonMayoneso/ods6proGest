@@ -504,7 +504,7 @@ body {
 
 .speech-bubble {
     position: absolute;
-    right: 100px;
+    right: 170px; 
     top: -15px;
     background: #fff;
     color: #000;
@@ -521,6 +521,7 @@ body {
     z-index: 10;
 }
 
+
 .speech-bubble::after {
     content: '';
     position: absolute;
@@ -531,6 +532,13 @@ body {
     border-left: 10px solid #fff;
 }
 
+@media (max-width: 768px) {
+    .speech-bubble {
+        right: 125px; 
+        font-size: 0.75rem;
+        padding: 8px 12px;
+    }
+}
 /* FOOTER */
 .main-footer {
     position: fixed;
@@ -713,4 +721,45 @@ body {
         top: 70px;
         width: 95%;
     }
+}
+/* INTRO CINEMÁTICA */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease-out;
+}
+
+.intro-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-overlay video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.boot-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #4fc3f7;
+    color: #4fc3f7;
+    font-family: 'VT323', monospace;
+    font-size: 2rem;
+    padding: 20px 40px;
+    cursor: pointer;
+    z-index: 100000;
+    animation: blink 1s infinite;
 }
