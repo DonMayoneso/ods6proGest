@@ -55,11 +55,12 @@
         { "src": "assets/NIXFA/Miembro del consejo soberano.png", "titulo": "CONSEJO SOBERANO", "desc": "Los miembros del Consejo Soberano fueron formados para creer que el agua es un recurso demasiado peligroso para quedar en manos de la gente." }
       ],
       "creditos": [
-        { "nombre": "Diddier Lozada", "rol": "Diseño Grafico", "foto": "assets/NIXFA/Diddier.jpeg", "link": "https://github.com" },
+        { "nombre": "Diddier Lozada", "rol": "Diseño Grafico", "foto": "assets/NIXFA/Diddier.JPEG", "link": "https://github.com" },
         { "nombre": "Steven Pila", "rol": "Animación 2D", "foto": "assets/NIXFA/Steven.jpg", "link": "https://github.com" },
         { "nombre": "Juan Rivera", "rol": "Readacción", "foto": "assets/NIXFA/Juan.jpg", "link": "https://github.com" },
         { "nombre": "Erika Quijije", "rol": "Programación Web", "foto": "assets/NIXFA/Erika.jpg", "link": "https://github.com" }
       ]
     }
   ]
+
 }
