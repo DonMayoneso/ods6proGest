@@ -23,10 +23,10 @@
         { "src": "assets/5.gif", "titulo": "Personaje E", "desc": "." }
       ],
 "creditos": [
-        { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://donmayoneso.github.io/portafolio_cv/" },
-        { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/imgtest2.jpg", "link": "https://github.com" },
-        { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/imgtest3.jpg", "link": "https://github.com" },
-        { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/imgtest.jpg", "link": "https://github.com" }
+        { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/javier.JPG", "link": "https://donmayoneso.github.io/portafolio_cv/" },
+        { "nombre": "Pablo Alvarado", "rol": "Desarrollo conceptual", "foto": "assets/padalustro.JPG", "link": "https://github.com" },
+        { "nombre": "Christopher Izurieta", "rol": "Diseño Gráfico", "foto": "assets/cris.JPG", "link": "https://github.com" },
+        { "nombre": "Jonathan Guamán", "rol": "Animador", "foto": "assets/joaco.JPG", "link": "https://github.com" }
       ]
     },
     {
@@ -64,5 +64,6 @@
   ]
 
 }
+
 
 
