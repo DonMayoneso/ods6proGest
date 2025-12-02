@@ -3,10 +3,10 @@
     {
       "id": "SECTOR 094846 – ASERVA",
       "titulo": "SECTOR 094846 – ASERVA",
-      "videoPath": "assets/machape.mp4", 
+      "videoPath": "assets/aserva.mp4", 
       "imagenUrl": "assets/PORTADA.jpg",
-      "pdfPath": "assets/smiling.pdf",
-      "audioPath": "assets/mii.mp3",
+      "pdfPath": "assets/aservartbook.pdf",
+      "audioPath": "assets/aserva.mp3",
       "ubimg": "left",
       "ubtitle": "right",
       "galDirection": "normal",
@@ -64,6 +64,7 @@
   ]
 
 }
+
 
 
 
