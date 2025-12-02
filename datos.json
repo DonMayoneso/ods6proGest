@@ -20,8 +20,7 @@
         { "src": "assets/2.gif", "titulo": "Personaje B", "desc": "." },
         { "src": "assets/3.gif", "titulo": "Personaje C", "desc": "." },
         { "src": "assets/4.gif", "titulo": "Personaje D", "desc": "." },
-        { "src": "assets/5.gif", "titulo": "Personaje E", "desc": "." },
-        { "src": "assets/6.gif", "titulo": "Personaje F", "desc": "." }
+        { "src": "assets/5.gif", "titulo": "Personaje E", "desc": "." }
       ],
 "creditos": [
         { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://donmayoneso.github.io/portafolio_cv/" },
@@ -65,4 +64,5 @@
   ]
 
 }
+
 
