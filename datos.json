@@ -4,7 +4,7 @@
       "id": "SECTOR 094846 – ASERVA",
       "titulo": "SECTOR 094846 – ASERVA",
       "videoPath": "assets/machape.mp4", 
-      "imagenUrl": "assets/imgtest.jpg",
+      "imagenUrl": "assets/PORTADA.jpg",
       "pdfPath": "assets/smiling.pdf",
       "audioPath": "assets/mii.mp3",
       "ubimg": "left",
@@ -16,11 +16,12 @@
       "accentColor": "#960018",
       "historia": "INICIANDO PROTOCOLO DE ANÁLISIS...\n\nEl mundo presenta una mercantilización biológica extrema. Sus estructuras sociales convierten a la casta inferior en filtros humanos forzados a procesar la toxicidad ambiental para sustentar a la élite.\n\nEstado actual: CRÍTICO.\n\n El control absoluto de La Cúspide se fractura cuando un vigía disidente, instigado por una inteligencia artificial, descubre que la escasez de agua es un mecanismo de control artificial.",
       "galeria": [
-        { "src": "assets/imgtest.jpg", "titulo": "ESTRUCTURA ALPHA", "desc": "Vista aérea de los servidores sumergidos." },
-        { "src": "assets/imgtest2.jpg", "titulo": "FAUNA LOCAL", "desc": "Especimen bio-digital purificador de agua." },
-        { "src": "assets/imgtest3.jpg", "titulo": "NÚCLEO", "desc": "Generador hidroeléctrico de fusión fría." },
-        { "src": "assets/imgtest.jpg", "titulo": "RED DE DATOS", "desc": "Flujo de información hídrica en tiempo real." },
-        { "src": "assets/imgtest2.jpg", "titulo": "COLONIA", "desc": "Asentamiento humano en simbiosis con el mar." }
+        { "src": "assets/1.gif", "titulo": "Personaje A", "desc": "." },
+        { "src": "assets/2.gif", "titulo": "Personaje B", "desc": "." },
+        { "src": "assets/3.gif", "titulo": "Personaje C", "desc": "." },
+        { "src": "assets/4.gif", "titulo": "Personaje D", "desc": "." },
+        { "src": "assets/5.gif", "titulo": "Personaje E", "desc": "." },
+        { "src": "assets/6.gif", "titulo": "Personaje F", "desc": "." }
       ],
 "creditos": [
         { "nombre": "Javier Troncoso", "rol": "Programador S.R.", "foto": "assets/imgtest.jpg", "link": "https://donmayoneso.github.io/portafolio_cv/" },
@@ -64,3 +65,4 @@
   ]
 
 }
+
