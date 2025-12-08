@@ -1,0 +1,78 @@
+/* CONFIGURACIÓN BASE */
+:root { --bg: #040417; }
+
+html, body {
+    height: 100%; margin: 0;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: 'VT323', monospace;
+    color: #fff;
+}
+
+canvas { display: block; }
+
+/* EFECTOS RETRO */
+#retro {
+    position: fixed; inset: 0; pointer-events: none;
+    background-image: linear-gradient(transparent 50%, rgba(0,0,0,0.06) 50%);
+    background-size: 100% 4px;
+    mix-blend-mode: overlay; opacity: 0.7; z-index: 10;
+}
+
+#vignette { 
+    position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.55) 100%); 
+    mix-blend-mode: multiply; opacity: 0.9; z-index: 10;
+}
+
+/* BOTÓN SALTAR (SKIP) */
+.skip-btn {
+    position: fixed; 
+    bottom: 30px; right: 30px;
+    background: rgba(0, 20, 40, 0.7); 
+    border: 1px solid #4fc3f7; 
+    color: #4fc3f7;
+    font-family: 'VT323', monospace; 
+    font-size: 1.3rem; 
+    padding: 10px 25px;
+    cursor: pointer; 
+    z-index: 100; 
+    pointer-events: auto;
+    transition: all 0.3s; 
+    text-transform: uppercase;
+    border-radius: 4px;
+    backdrop-filter: blur(2px);
+    letter-spacing: 2px;
+}
+
+.skip-btn:hover { 
+    background: rgba(79, 195, 247, 0.2); 
+    color: white; 
+    box-shadow: 0 0 15px rgba(79, 195, 247, 0.4);
+}
+
+/* EASTER EGG */
+#easter-egg {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 150px; height: 150px;
+    opacity: 0;
+    background: red;
+    z-index: 9999;
+    cursor: default; 
+    display: block;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .skip-btn { 
+        bottom: 20px; right: 20px; 
+        font-size: 1.1rem; 
+        padding: 12px 20px; 
+    }
+    #easter-egg {
+        width: 100px; height: 100px;
+    }
+}
