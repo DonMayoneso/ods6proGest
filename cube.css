@@ -763,3 +763,34 @@ body {
     z-index: 100000;
     animation: blink 1s infinite;
 }
+/* ESTILOS BOTÓN GAME OVER - INTEGRACIÓN VISUAL */
+.game-over-btn {
+    background: rgba(80, 80, 80, 0.4);
+    color: #d3d3d3;
+    border: 1px solid rgba(211, 211, 211, 0.5);
+    
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    
+    /* Comportamiento y Efectos */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 0 5px rgba(211, 211, 211, 0.2);
+    pointer-events: auto;
+}
+
+.game-over-btn:hover {
+    background: #d3d3d3;
+    color: #0a0a0a;
+    box-shadow: 0 0 20px rgba(211, 211, 211, 0.6);
+    border-color: #fff;
+    cursor: pointer;
+}

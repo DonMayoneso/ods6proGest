@@ -3,125 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>H₂Q - Mundos</title>
-    <link rel="icon" href="../assets/logoweb.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>H₂Q - ASERVA</title>
+    
+    <link rel="icon" href="../aserva/logoweb.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Fira+Code:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="mundo.css">
 </head>
 <body>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div id="boot-overlay"></div>
+
     <div id="pdfModal" class="modal">
         <div class="modal-content-pdf">
-            <div class="modal-header">
-                <div class="modal-title">DOC_CLASIF: THEME_ARTBOOK</div>
-                <span class="close-modal" data-target="pdfModal">&times;</span>
+            <div class="modal-header" style="border-bottom: 1px solid var(--term-green); padding: 10px;">
+                <span class="close-modal" data-target="pdfModal">X</span>
+                <div class="modal-title">> DECRYPTING: ARTBOOK.PDF</div>
             </div>
-            
-            <iframe id="pdfEmbed" src="" class="pdf-viewer desktop-only"></iframe>
-
-            <div class="mobile-pdf-fallback mobile-only">
-                <div class="fallback-icon"><i class="fas fa-file-pdf"></i></div>
-                <h3>VISUALIZACIÓN EXTERNA REQUERIDA</h3>
-                <p>El protocolo móvil impide la desencriptación en pantalla.</p>
-                <a id="mobileOpenLink" href="" target="_blank" class="btn-mobile-open">
-                    <i class="fas fa-external-link-alt"></i> ABRIR DOCUMENTO
-                </a>
+            <iframe id="pdfEmbed" src="../aserva/aservartbook.pdf" class="pdf-viewer desktop-only" style="width:100%; height:60vh; border:none;"></iframe>
+            <div class="mobile-pdf-fallback mobile-only" style="text-align: center; padding: 40px 20px;">
+                <i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--term-green); margin-bottom: 20px;"></i>
+                <p style="margin-bottom: 20px; font-family: var(--font-code);">[ ! ] VISUALIZACIÓN RESTRINGIDA EN MÓVIL.</p>
+                <a href="../aserva/aservartbook.pdf" target="_blank" class="cyber-btn"><i class="fas fa-external-link-alt"></i> ABRIR ARCHIVO</a>
             </div>
-
-            <div class="modal-footer">
-                <a id="downloadLink" href="" download class="download-btn">
-                    <i class="fas fa-download"></i> DESCARGAR ARCHIVO
-                </a>
+            <div class="modal-footer" style="padding: 10px; text-align: right;">
+                <a href="../aserva/aservartbook.pdf" download class="nav-btn">DESCARGAR</a>
             </div>
         </div>
     </div>
 
     <div id="imgModal" class="modal">
-        <span class="close-modal" data-target="imgModal" style="position:absolute; top:20px; right:30px; z-index:2001;">&times;</span>
-        <img id="lightboxImg" src="" class="modal-content-img">
+        <span class="close-modal" data-target="imgModal" style="position:absolute; top:20px; right:30px; font-size:3rem;">&times;</span>
+        <img id="lightboxImg" src="" class="modal-content-img" style="display:block; max-height:90vh; margin: 2% auto; border: 2px solid var(--term-green); box-shadow: 0 0 50px var(--term-green);">
     </div>
 
-    <div id="galleryModal" class="modal">
-        <div class="modal-content-gallery">
-            <span class="close-modal" data-target="galleryModal" style="position:absolute; top:10px; right:20px; z-index:2001;">&times;</span>
-            <div class="modal-gallery-img">
-                <img id="galModalImg" src="" alt="Detalle">
-            </div>
-            <div class="modal-gallery-info">
-                <h2 id="galModalTitle" class="modal-gallery-title">TITULO</h2>
-                <p id="galModalDesc" class="modal-gallery-desc">Descripción...</p>
+    <div id="charModal" class="modal">
+        <div class="modal-content-gallery char-modal-content">
+            <span class="close-modal" data-target="charModal">&times;</span>
+            <div class="char-modal-layout">
+                <div class="char-modal-visual">
+                    <img id="charModalImg" src="" alt="Subject" title="Click para ampliar">
+                    <div class="scan-line-overlay"></div>
+                </div>
+                <div class="char-modal-data">
+                    <h2 id="charModalName" class="glitch-text">NOMBRE</h2>
+                    <h3 id="charModalRole" class="sub-header">ROL</h3>
+                    <div class="char-desc-box">
+                        <p id="charModalDesc">Cargando datos...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <button id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></button>
+    <button id="backToTop" class="back-to-top">^</button>
 
-    <div class="container">
+    <div class="container" id="main-container">
         <header>
             <div class="header-left">
-                <a href="../index.html">
-                    <img src="../assets/logoweb.png" alt="Logo" class="project-logo">
-                </a>
-                <a href="../volver.html" class="nav-link">[ VOLVER ]</a>
+                <a href="index.html"><img src="../aserva/logoweb.png" alt="Logo" class="project-logo"></a>
+                <a href="volver.html" class="nav-link">< ASERVA: INDEX</a>
             </div>
             <div class="header-right">
-                <button id="btn-leeme" class="nav-btn">[ LÉEME ]</button>
-                <button id="btn-creditos" class="nav-btn">[ CRÉDITOS ]</button>
+                <button id="btn-leeme" class="nav-btn">/ LEER_DOCS</button>
+                <button id="btn-creditos" class="nav-btn">/ DEV_TEAM</button>
             </div>
         </header>
 
         <div class="video-layout">
-            <div class="video-placeholder" id="video-placeholder">
-                <span>CARGANDO STREAM...</span>
-            </div>
-            <video id="dynamic-video" controls autoplay muted loop playsinline>
-                <source src="" type="video/mp4">
+            <div id="rec-timer-display">[ <span class="rec-dot">REC</span> ] <span id="rec-time-val">00:00:00:00</span></div>
+            <button id="btn-video-start" class="cyber-btn"><i class="fas fa-play"></i> REPRODUCIR GRABACIÓN</button>
+            <video id="dynamic-video" muted loop playsinline>
+                <source src="../aserva/aserva.mp4" type="video/mp4">
             </video>
+            <div id="video-controls" class="video-controls-panel">
+                <button id="vhs-rewind" class="ctrl-btn"><< -30s</button>
+                <button id="vhs-toggle" class="ctrl-btn">|| PAUSA</button>
+                <button id="vhs-forward" class="ctrl-btn">+30s >></button>
+                <button id="vhs-restart" class="ctrl-btn">[ REBOOT ]</button>
+            </div>
         </div>
 
-        <div class="title-row" id="title-row">
+        <div class="title-row">
             <div class="audio-player-container">
                 <div class="cyber-player">
-                    <button id="cyber-play" class="cyber-btn" title="Play/Pause"><i class="fas fa-play"></i></button>
-                    <button id="cyber-reset" class="cyber-btn" title="Reiniciar"><i class="fas fa-redo"></i></button>
-                    <div class="cyber-info">
-                        <span class="cyber-label">AUDIO LOG</span>
-                    </div>
-                    <div class="cyber-visualizer" id="visualizer">
-                        <div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div>
-                    </div>
+                    <button id="cyber-play" class="cyber-btn" title="Play">[ > ]</button>
+                    <button id="cyber-reset" class="cyber-btn" title="Reset">[ R ]</button>
+                    <div class="cyber-info"><span class="cyber-label">AUDIO_LOG.mp3</span></div>
+                    <div class="cyber-visualizer"><div class="viz-bar"></div><div class="viz-bar"></div><div class="viz-bar"></div></div>
                 </div>
-                <audio id="dynamic-audio">
-                    <source src="" type="audio/mpeg">
-                </audio>
+                <audio id="dynamic-audio"><source src="../aserva/aserva.mp3" type="audio/mpeg"></audio>
             </div>
-            <div class="mundo-title" id="dynamic-title"></div>
+            <div class="mundo-title" id="dynamic-title">SECTOR 094846 – ASERVA</div>
         </div>
 
         <div class="content-section">
-            <div class="image-and-text" id="layout-container">
-                <div class="square-image" id="img-container">
-                    <span id="img-placeholder">NO DATA</span>
-                    <img id="dynamic-img" src="" alt="Evidencia Visual">
+            <div class="image-and-text">
+                <div class="square-image">
+                    <img src="../aserva/portada.jpg" alt="Evidencia">
                 </div>
-                <div class="text-box" id="history-box"></div>
+                <div class="text-box cursor-blink" id="history-box">
+                    > INICIANDO PROTOCOLO DE ANÁLISIS 094846...<br><br>
+                    [ESTADO]: <span style="color:red">CRÍTICO</span><br>
+                    [UBICACIÓN]: ASERVA - ZONA DE FILTRADO<br><br>
+                    La mercantilización biológica ha alcanzado niveles terminales. En este sector, las estructuras sociales han sido reconfiguradas por el <strong>IMPERIO DEL CAUCE</strong>. La casta inferior ya no son ciudadanos; han sido degradados a "Bio-Filtros", unidades orgánicas forzadas a procesar la toxicidad ambiental para generar agua potable destinada exclusivamente a La Cúspide.<br><br>
+                    > DETECTANDO ANOMALÍA...<br>
+                    El control absoluto se fractura. Un vigía disidente ha interceptado señales de <strong>ZYPHOS</strong>, una Inteligencia Artificial antigua. Los datos desencriptados revelan una verdad prohibida: la "escasez de agua" no es un fenómeno natural, sino un algoritmo de control artificial diseñado para mantener la subyugación mediante la sed.
+                </div>
             </div>
         </div>
 
-        <div class="gallery-section" id="gallery-section" style="display:none;">
-            <div class="gallery-header">
-                <div class="gallery-title">EVIDENCIA VISUAL</div>
+        <div class="character-dossier-section">
+            <div class="section-header">> BASE DE DATOS: SUJETOS IDENTIFICADOS</div>
+            
+            <div class="dossier-nav">
+                <button class="tab-btn active" onclick="openTab('aliados')">[ ALIADOS ]</button>
+                <button class="tab-btn" onclick="openTab('enemigos')" style="color:#ff3333; border-color:#ff3333">[ ENEMIGOS ]</button>
+                <button class="tab-btn" onclick="openTab('extras')">[ EXTRAS ]</button>
             </div>
-            <div class="gallery-container">
-                <div class="gallery-track" id="gallery-track"></div>
+
+            <div id="tab-aliados" class="tab-content active-content">
+                <div class="dossier-category-title">// PRINCIPALES</div>
+                <div class="dossier-grid">
+                    <div class="char-card" data-name="Arthur C. Morgan" data-role="ALIAS: ASERVA" data-img="../aserva/arthur.gif" data-desc="Nacido en el Cauce, ex-detective de CIMAS y veterano de la Guerra del Acabose. Tras implantarse una memoria neural prohibida, se fusionó con la IA ZYPHOS. Es el portador de la 'variable imposible', la pieza destinada a quebrar el Imperio desde dentro.">
+                        <div class="char-card-img-box"><img src="../aserva/arthur.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Arthur C. Morgan</div><div class="char-role">ASERVA</div></div>
+                    </div>
+                    <div class="char-card" data-name="ZYPHOS" data-role="ALIAS: LA CONCIENCIA" data-img="../aserva/zyphos.gif" data-desc="IA creada por Nicholas Voren. No es un arma, sino un sistema iterativo diseñado para encontrar al 'Elegido'. Se manifiesta en la mente de Arthur, maximizando su supervivencia estadística.">
+                        <div class="char-card-img-box"><img src="../aserva/zyphos.gif" class="dossier-img" onerror="this.src='../aserva/imgtest.jpg'"></div>
+                        <div class="char-card-info"><div class="char-name">ZYPHOS</div><div class="char-role">LA CONCIENCIA</div></div>
+                    </div>
+                </div>
+                
+                <div class="dossier-category-title">// SOLDADOS</div>
+                <div class="dossier-grid">
+                    <div class="char-card" data-name="Skullwardens" data-role="GUARDIA ÓSEA" data-img="../aserva/skullwardens.gif" data-desc="Última unidad táctica del mundo antiguo. Famosos por sus cascos de calavera y disciplina férrea. Aunque aniquilados, su huella persiste como símbolo de resistencia que el Imperio no pudo borrar.">
+                        <div class="char-card-img-box"><img src="../aserva/skullwardens.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Skullwardens</div><div class="char-role">GUARDIA ÓSEA</div></div>
+                    </div>
+                    <div class="char-card" data-name="The Izran Front" data-role="HEREDEROS DE IZ" data-img="../aserva/izran_front.gif" data-desc="La última gran fuerza militar que desafía al Cauce. Formada por veteranos y desertores que siguen el legado de Nicholas Voren. Saben que son la última línea de defensa antes de la extinción total.">
+                        <div class="char-card-img-box"><img src="../aserva/izran_front.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Izran Front</div><div class="char-role">RESISTENCIA</div></div>
+                    </div>
+                </div>
+
+                <div class="dossier-category-title">// SECUNDARIOS</div>
+                <div class="dossier-grid">
+                    <div class="char-card" data-name="Nicholas Isaac Voren" data-role="EL ARQUITECTO" data-img="../aserva/issac.gif" data-desc="Hacker prodigio nacido tras el derrumbe. Descubrió la verdad de la Hidrocracia y creó a ZYPHOS para destruirla. Asesinado por IRUS, pero su código sigue vivo moldeando el destino.">
+                        <div class="char-card-img-box"><img src="../aserva/issac.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Nicholas Voren</div><div class="char-role">ARQUITECTO</div></div>
+                    </div>
+                    <div class="char-card" data-name="Ardent Hale" data-role="EL ESTRATEGA" data-img="../aserva/ardent_hale.gif" data-desc="Líder de la Nueva Revolución (RCM). Un estratega brillante cuya retórica inspira esperanza, aunque su ascenso recuerda inquietantemente a los orígenes del tirano Kael Vorynth.">
+                        <div class="char-card-img-box"><img src="../aserva/ardent_hale.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Ardent Hale</div><div class="char-role">ESTRATEGA</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-enemigos" class="tab-content">
+                <div class="dossier-category-title" style="color:#ff3333; border-color:#ff3333">// PRINCIPALES</div>
+                <div class="dossier-grid">
+                    <div class="char-card" style="border-color:#500" data-name="Supra-Rector" data-role="DESCONOCIDO" data-img="../aserva/supra_rector.gif" data-desc="Datos Clasificados. Nivel de amenaza: Desconocido.">
+                        <div class="char-card-img-box"><img src="../aserva/supra_rector.gif" class="dossier-img" onerror="this.src='../aserva/imgtest.jpg'"></div>
+                        <div class="char-card-info"><div class="char-name">Supra-Rector</div><div class="char-role">LÍDER</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="Kael Vorynth" data-role="PADRE HIDROCRACIA" data-img="../aserva/kael_vorynth.gif" data-desc="Arquitecto ideológico del Imperio. Transformó el agua en moneda y control moral. Aunque muerto, su doctrina gobierna cada gota de agua y cada sentencia del régimen.">
+                        <div class="char-card-img-box"><img src="../aserva/kael_vorynth.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Kael Vorynth</div><div class="char-role">FUNDADOR</div></div>
+                    </div>
+                </div>
+
+                <div class="dossier-category-title" style="color:#ff3333; border-color:#ff3333">// TROPAS & ROBOTS</div>
+                <div class="dossier-grid">
+                    <div class="char-card" style="border-color:#500" data-name="SS Gigantis" data-role="NINTH DELIVERANCE" data-img="../aserva/ss_giantis.gif" data-desc="Murallas móviles de más de 2 metros. Portan cañones fusionados a su sistema nervioso. No luchan, 'limpian'. Su aparición significa el exterminio total de un sector.">
+                        <div class="char-card-img-box"><img src="../aserva/ss_giantis.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">SS Gigantis</div><div class="char-role">PESADO</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="RF-6 Celestial" data-role="TROPA DEL CIELO" data-img="../aserva/rf_6.gif" data-desc="Soldados fusionados irreversiblemente a sus exoarmaduras. Caen desde el cielo como asteroides. Representan la Décima Entrega: borrado absoluto de zonas impuras.">
+                        <div class="char-card-img-box"><img src="../aserva/rf_6.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">RF-6 Celestial</div><div class="char-role">AÉREO</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="A Goliath Units" data-role="ESTANDARTE DE ACERO" data-img="../aserva/a_goliath.gif" data-desc="Bípedos de 5 metros forjados en acero oscuro. Portan el estandarte del Imperio en su espalda. Sensores multiespectro y protocolo de exterminio indiscriminado.">
+                        <div class="char-card-img-box"><img src="../aserva/a_goliath.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">A Goliath</div><div class="char-role">MECHA</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="Raktor Harvest" data-role="RECOLECTOR" data-img="../aserva/raktor.gif" data-desc="Máquinas autónomas de extracción vital. Comprimen víctimas en sus cámaras internas para drenar el agua corporal en segundos.">
+                        <div class="char-card-img-box"><img src="../aserva/raktor.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Raktor Harvest</div><div class="char-role">EXTRACTOR</div></div>
+                    </div>
+                </div>
+
+                <div class="dossier-category-title" style="color:#ff3333; border-color:#ff3333">// COMANDANTES</div>
+                <div class="dossier-grid">
+                    <div class="char-card" style="border-color:#500" data-name="Irus Vharge" data-role="EL EJECUTOR" data-img="../aserva/irus.gif" data-desc="Comandante Supremo y asesino de Nicholas Voren. Un fanático forjado en radiación y disciplina. Donde él camina, la resistencia conoce el verdadero miedo.">
+                        <div class="char-card-img-box"><img src="../aserva/irus.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Irus Vharge</div><div class="char-role">COMANDANTE</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="Takion Val’Seraz" data-role="EL SANTO MILITAR" data-img="../aserva/takion.gif" data-desc="Venerado como héroe, temido como demonio. Arquitecto de las Bombas del Acabose que borraron naciones enteras. Redactor principal del Código 32.">
+                        <div class="char-card-img-box"><img src="../aserva/takion.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Takion Val’Seraz</div><div class="char-role">ALTO MANDO</div></div>
+                    </div>
+                    <div class="char-card" style="border-color:#500" data-name="Cael" data-role="VERDUGO DE SEDA" data-img="../aserva/cael.gif" data-desc="Actual Líder Máximo. Bajo su máscara de virtud esconde al mayor genocida de la historia. Creador de las granjas humanas y la regla del '1 de 5'.">
+                        <div class="char-card-img-box"><img src="../aserva/cael.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Cael</div><div class="char-role">LÍDER MÁXIMO</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-extras" class="tab-content">
+                <div class="dossier-category-title">// OTROS</div>
+                <div class="dossier-grid">
+                    <div class="char-card" data-name="Grimclowns" data-role="PAYASOS DE LA SED" data-img="../aserva/grimclowns.gif" data-desc="Mercenarios desterrados que usan maquillaje grotesco. Sobreviven drenando tuberías y asaltando viajeros. Una parodia violenta del orden establecido.">
+                        <div class="char-card-img-box"><img src="../aserva/grimclowns.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Grimclowns</div><div class="char-role">MERCENARIOS</div></div>
+                    </div>
+                    <div class="char-card" data-name="Lysa-0" data-role="VIRUS DE MEMORIA" data-img="../aserva/lysa_0.gif" data-desc="Entidad digital con forma de niña. Un nodo corrupto en la red neural que fuerza a recordar traumas pasados. Un espectro que hace imposible el olvido.">
+                        <div class="char-card-img-box"><img src="../aserva/lysa_0.gif" class="dossier-img"></div>
+                        <div class="char-card-info"><div class="char-name">Lysa-0</div><div class="char-role">ANOMALÍA</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hydro-section">
+            <div class="section-header">> [ CLASSIFIED_DATA ]: LA HIDROCRACIA</div>
+            <div class="hydro-layout">
+                <div class="hydro-text">
+                    <p>> ACCEDIENDO A DEFINICIÓN DEL RÉGIMEN...</p><br>
+                    <p>El término <strong>"Hidrocracia"</strong> define con precisión brutal el nuevo orden surgido tras el colapso. En este sistema, el poder no se sostiene en ideologías o territorios, sino en el <strong>control absoluto del agua</strong>.</p><br>
+                    <p>Bajo el mandato del <strong>IMPERIO DEL CAUCE</strong>, la "escasez" es un arma. La doctrina dicta que los ciudadanos son meros recursos; la extracción vital se realiza directamente de los cuerpos humanos, drenando su esencia para alimentar a la élite.</p>
+                </div>
+                <div class="square-image" style="height: auto; min-height: 250px;">
+                     <img src="../aserva/imgtest.jpg" alt="Hidrocracia Artefacto" style="filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(200%);">
+                </div>
             </div>
         </div>
 
         <div id="creditos-section" class="credits-section">
-            <div class="credits-title">EQUIPO DE DESARROLLO</div>
-            <div class="team-grid" id="team-grid"></div>
-            <div class="credits-footer-text">
-                Carrera de Diseño Multimedia - Universidad Politécnica Salesiana <i class="fas fa-copyright"></i> Derechos Reservados 2025
+            <div class="credits-title">> UNIT: 094846_DEV_SQUAD</div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="../aserva/mayoneso.png" class="team-img" alt="Javier" onerror="this.src='../aserva/imgtest.jpg'">
+                    <div class="team-name">Javier Troncoso</div>
+                    <div class="team-role">[ Programador S.R. ]</div>
+                    <a href="https://donmayoneso.github.io/portafolio_cv/" target="_blank" class="github-btn"><i class="fab fa-github"></i> GITHUB</a>
+                </div>
+                <div class="team-card">
+                    <img src="../aserva/doro.png" class="team-img" alt="Pablo" onerror="this.src='../aserva/imgtest.jpg'">
+                    <div class="team-name">Pablo Alvarado</div>
+                    <div class="team-role">[ Desarrollo Conceptual ]</div>
+                    <a href="https://github.com" target="_blank" class="github-btn"><i class="fab fa-github"></i> GITHUB</a>
+                </div>
+                <div class="team-card">
+                    <img src="../aserva/cris.png" class="team-img" alt="Christopher" onerror="this.src='../aserva/imgtest.jpg'">
+                    <div class="team-name">Christopher Izurieta</div>
+                    <div class="team-role">[ Diseño Gráfico ]</div>
+                    <a href="https://github.com" target="_blank" class="github-btn"><i class="fab fa-github"></i> GITHUB</a>
+                </div>
+                <div class="team-card">
+                    <img src="../aserva/joaco.png" class="team-img" alt="Jonathan" onerror="this.src='../aserva/imgtest.jpg'">
+                    <div class="team-name">Jonathan Guamán</div>
+                    <div class="team-role">[ Animador ]</div>
+                    <a href="https://github.com" target="_blank" class="github-btn"><i class="fab fa-github"></i> GITHUB</a>
+                </div>
+            </div>
+            <div class="credits-footer-text" style="text-align:center; margin-top:30px; font-size:0.8rem; opacity:0.7;">
+                SYSM.ADMIN: UNIVERSIDAD POLITÉCNICA SALESIANA // 2025
             </div>
         </div>
     </div>
